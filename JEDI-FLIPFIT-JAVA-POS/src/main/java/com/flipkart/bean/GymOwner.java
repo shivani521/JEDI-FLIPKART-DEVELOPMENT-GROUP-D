@@ -6,10 +6,10 @@ public class GymOwner extends User {
 
     private String aadharCardNumber;
     private String panNumber;
-    private List<String> gymCenterId;
+    private List<Integer> gymCenterId;
     private boolean status;
 
-    public GymOwner(String id, String name, String email, String password, String phoneNO, String aadharCardNumber, String panNumber, List<String> gymCenterId, boolean status) {
+    public GymOwner(int id, String name, String email, String password, String phoneNO, String aadharCardNumber, String panNumber, List<Integer> gymCenterId, boolean status) {
         super(id, name, email, password,phoneNO);
         this.aadharCardNumber = aadharCardNumber;
         this.panNumber = panNumber;
@@ -25,11 +25,11 @@ public class GymOwner extends User {
         this.status = status;
     }
 
-    public List<String> getGymCenterId() {
+    public List<Integer> getGymCenterId() {
         return gymCenterId;
     }
 
-    public void setGymCenterId(List<String> gymCenterId) {
+    public void setGymCenterId(List<Integer> gymCenterId) {
         this.gymCenterId = gymCenterId;
     }
 

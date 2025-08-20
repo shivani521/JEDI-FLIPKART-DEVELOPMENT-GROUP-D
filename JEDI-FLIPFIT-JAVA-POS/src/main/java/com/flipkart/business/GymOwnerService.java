@@ -1,6 +1,8 @@
 package com.flipkart.business;
 
+import com.flipkart.bean.FlipFitGym;
 import com.flipkart.bean.GymOwner;
+import com.flipkart.bean.Slot;
 
 import java.util.List;
 
@@ -33,5 +35,15 @@ public class GymOwnerService implements GymOwnerInterface {
     @Override
     public boolean changePassword(String username, String oldPassword, String newPassword) {
         return false;
+    }
+
+    @Override
+    public List<FlipFitGym> getPendingGyms() {
+        return List.of();
+    }
+
+    @Override
+    public List<Slot> getPendingSlots() {
+        return List.of();
     }
 }
