@@ -1,8 +1,15 @@
 package com.flipkart.business;
 
+import com.flipkart.bean.GymOwner;
+
 import java.util.List;
 
 public class GymOwnerService implements GymOwnerInterface {
+    public static List<GymOwner> getPendingGymOwners() {
+        System.out.println("to be added");
+        return List.of();
+    }
+
     @Override
     public boolean login(String userName, String password) {
         return false;
