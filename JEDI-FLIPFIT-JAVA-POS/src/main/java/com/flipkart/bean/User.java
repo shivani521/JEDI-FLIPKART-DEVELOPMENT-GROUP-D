@@ -2,12 +2,12 @@ package com.flipkart.bean;
 
 public class User {
     private String userName;
-    private String userID;
+    private int userID;
     private String emailID;
     private String password;
     private String phoneNO;
 
-    public User (String userId, String userName, String emailID, String password, String phoneNO) {
+    public User (int userId, String userName, String emailID, String password, String phoneNO) {
         this.userID = userId;
         this.userName = userName;
         this.emailID = emailID;
@@ -15,13 +15,10 @@ public class User {
         this.phoneNO = phoneNO;
     }
 
-    public String getUserID() {
+    public int getUserID() {
         return userID;
     }
 
-    public void setUserID(String userID) {
-        this.userID= userID;
-    }
 
     public String getUserName() {
         return userName;
@@ -54,4 +51,8 @@ public class User {
         this.password = password;
     }
 
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
 }
