@@ -1,19 +1,19 @@
 package com.flipkart.bean;
 
 public class Booking {
-    private String bookingId;
+    private int bookingId;
     private String userID;
 
-    public Booking (String bookingId, String userID) {
+    public Booking (int bookingId, String userID) {
         this.bookingId = bookingId;
         this.userID = userID;
     }
 
-    public String getBookingID() {
+    public int getBookingID() {
         return bookingId;
     }
 
-    public void setBookingID(String bookingID) {
+    public void setBookingID(int bookingID) {
         this.bookingId = bookingID;
     }
 

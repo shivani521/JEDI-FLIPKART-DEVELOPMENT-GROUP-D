@@ -2,9 +2,9 @@ package com.flipkart.bean;
 
 public class FlipFitGym {
 
-    private String gymId;
+    private int gymId;
     private String gymName;
-    private String ownerId;
+    private int ownerId;
     private String ownerName;
     private String gymAddress;
     private int numberOfSlots;
@@ -12,7 +12,7 @@ public class FlipFitGym {
     private int gymStatus;
     private String ownerGstNumber;
 
-    public FlipFitGym(String gymId, String gymName, String ownerId, String ownerName, String gymAddress, int numberOfSlots, int cost, int gymStatus, String ownerGstNumber) {
+    public FlipFitGym(int gymId, String gymName, int ownerId, String ownerName, String gymAddress, int numberOfSlots, int cost, int gymStatus, String ownerGstNumber) {
         this.gymId = gymId;
         this.gymName = gymName;
         this.ownerId = ownerId;
@@ -32,11 +32,11 @@ public class FlipFitGym {
         this.numberOfSlots = numberOfSlots;
     }
 
-    public String getGymId() {
+    public int getGymId() {
         return gymId;
     }
 
-    public void setGymId(String gymId) {
+    public void setGymId(int gymId) {
         this.gymId = gymId;
     }
 
@@ -48,11 +48,11 @@ public class FlipFitGym {
         this.gymName = gymName;
     }
 
-    public String getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(String ownerId) {
+    public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
 
