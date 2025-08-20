@@ -4,31 +4,31 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Slot {
-    private String slotId;
-    private String gymId;
+    private int slotId;
+    private int gymId;
     private LocalDate slotDate;
     private LocalTime slotTime;
 
-    public Slot(String slotId, String gymId, LocalDate date, LocalTime slotTime) {
+    public Slot(int slotId, int gymId, LocalDate date, LocalTime slotTime) {
         this.slotId = slotId;
         this.gymId = gymId;
         this.slotDate = date;
         this.slotTime = slotTime;
     }
 
-    public String getSlotId() {
+    public int getSlotId() {
         return slotId;
     }
 
-    public void setSlotId(String slotId) {
+    public void setSlotId(int slotId) {
         this.slotId = slotId;
     }
 
-    public String getGymId() {
+    public int getGymId() {
         return gymId;
     }
 
-    public void setGymId(String gymId) {
+    public void setGymId(int gymId) {
         this.gymId = gymId;
     }
 

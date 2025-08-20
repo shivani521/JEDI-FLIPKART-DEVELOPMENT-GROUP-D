@@ -1,10 +1,7 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.*;
-import com.flipkart.business.AdminInterface;
-import com.flipkart.business.AdminService;
-import com.flipkart.business.CustomerService;
-import com.flipkart.business.GymOwnerService;
+import com.flipkart.business.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +11,7 @@ import static java.lang.System.in;
 public class GymFlipFitAdminMenu {
 
     private AdminInterface adminService=new AdminService();
+    private GymOwnerService gymOwnerService=new GymOwnerService();
 
     public void adminMainPage() {
         System.out.println("Welcome to Admin Menu Page\n");
@@ -62,19 +60,19 @@ public class GymFlipFitAdminMenu {
 
             case 4:
                 System.out.println("Pending gym requests displayed");
-                List<FlipFitGym> pendingGyms = GymOwnerService.getPendingGyms();
+                List<FlipFitGym> pendingGyms = gymOwnerService.getPendingGyms();
                 showPendingGyms(pendingGyms);
                 break;
             case 5:
                 System.out.println("Pending slot requests displayed");
-                List<Slot> pendingSlots = GymOwnerService.getPendingSlots();
-                Helper.showSlots(pendingSlots, "Pending slots");
+                List<Slot> pendingSlots = gymOwnerService.getPendingSlots();
+//                Helper.showSlots(pendingSlots, "Pending slots");
                 break;
             case 6:
                 try {
                     System.out.println("Enter gymId: ");
                     int approvedGymId = Integer.parseInt(sc.nextLine());
-                    AdminService.approveGym(approvedGymId);
+                    adminService.approveGymOwner(approvedGymId, false);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -84,7 +82,7 @@ public class GymFlipFitAdminMenu {
                 try {
                     System.out.println("Enter gymId: ");
                     int rejectedGymId = Integer.parseInt(sc.nextLine());
-                    AdminService.rejectGym(rejectedGymId);
+                    adminService.removeGymOwner(rejectedGymId);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -93,7 +91,7 @@ public class GymFlipFitAdminMenu {
                 try {
                     System.out.println("Enter slotId: ");
                     int approvedSlotId = Integer.parseInt(sc.nextLine());
-                    AdminService.approveSlot(approvedSlotId);
+                    adminService.a
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }

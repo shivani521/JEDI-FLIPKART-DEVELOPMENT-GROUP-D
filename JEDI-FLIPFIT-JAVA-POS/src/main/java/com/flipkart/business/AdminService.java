@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AdminService implements AdminInterface{
     @Override
-    public static boolean approveGymOwner(int gymOwnerId, boolean status) {
+    public  boolean approveGymOwner(int gymOwnerId, boolean status) {
         return false;
     }
 

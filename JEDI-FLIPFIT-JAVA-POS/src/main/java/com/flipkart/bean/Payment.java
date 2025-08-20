@@ -1,17 +1,17 @@
 package com.flipkart.bean;
 
 public class Payment {
-    private String paymentId;
+    private int paymentId;
     private String bookingId;
     private float amountPaid;
 
     public Payment() {}
 
-    public String getPaymentId() {
+    public int getPaymentId() {
         return paymentId;
     }
 
-    public void setPaymentId(String paymentId) {
+    public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
     }
 
