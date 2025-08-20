@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AdminService implements AdminInterface{
     @Override
-    public boolean approveGymOwner(String gymOwnerId, boolean status) {
+    public static boolean approveGymOwner(int gymOwnerId, boolean status) {
         return false;
     }
 
@@ -23,5 +23,10 @@ public class AdminService implements AdminInterface{
     @Override
     public void login(String userName, String password) {
 
+    }
+
+    @Override
+    public boolean removeGymOwner(int gymOwnerId) {
+        return false;
     }
 }
