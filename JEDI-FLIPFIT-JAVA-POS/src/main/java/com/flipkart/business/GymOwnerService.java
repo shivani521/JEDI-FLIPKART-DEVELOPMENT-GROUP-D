@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
+import java.sql.Time;
 
 public class GymOwnerService implements GymOwnerInterface {
 
@@ -40,10 +42,17 @@ public class GymOwnerService implements GymOwnerInterface {
     }
 
     @Override
-    public GymOwner createGymOwner(int userId, String userName, String email, String password, String phoneNumber,String adharCardNumber,String panNumber,List<Integer> gymCenterId,boolean status) {
+    public GymOwner createGymOwner(int userId, String userName, String email, String password, String phoneNumber, String adharCardNumber, String panNumber, List<Integer> gymCenterId, boolean status) {
         System.out.println("createGymOwner method called.");
-        // Returns a hardcoded GymOwner object
-        return new GymOwner(userId, userName, email, password,phoneNumber, adharCardNumber,panNumber,gymCenterId,status);
+        String name = userName;
+        int roleId = 2; // Example roleId for GymOwner
+        String statusStr = status ? "ACTIVE" : "INACTIVE";
+        GymOwner gymOwner = new GymOwner(userName, userId, password, email, name, roleId, statusStr);
+
+        gymOwner.setAccountNumber(adharCardNumber); // Or use a separate field for account number
+        gymOwner.setGymOwnerId(userId);
+
+        return gymOwner;
     }
 
     @Override
@@ -83,10 +92,35 @@ public class GymOwnerService implements GymOwnerInterface {
     public List<Slot> getPendingSlots() {
         System.out.println("getPendingSlots method called.");
         System.out.println("Fetching all pending slots...");
-        // Returns a hardcoded list of Slots
         List<Slot> pendingSlots = new ArrayList<>();
-        pendingSlots.add(new Slot(101, 1, LocalDate.of(2025, 8, 22), LocalTime.of(10, 0)));
-        pendingSlots.add(new Slot(102, 2, LocalDate.of(2025, 8, 23), LocalTime.of(15, 0)));
+
+        // Example slots, using the correct constructor (convert to java.sql.Date and java.sql.Time)
+        pendingSlots.add(
+                new Slot(
+                        "PENDING", // status
+                        101,       // slotId
+                        1,         // gymId
+                        Time.valueOf(LocalTime.of(10, 0)), // startTime
+                        Time.valueOf(LocalTime.of(11, 0)), // endTime (dummy)
+                        10,        // seatsAvailable (dummy)
+                        500.0,     // price (dummy)
+                        Date.valueOf(LocalDate.of(2025, 8, 22)), // slotDate
+                        10         // totalSeats (dummy)
+                )
+        );
+        pendingSlots.add(
+                new Slot(
+                        "PENDING",
+                        102,
+                        2,
+                        Time.valueOf(LocalTime.of(15, 0)),
+                        Time.valueOf(LocalTime.of(16, 0)),
+                        10,
+                        500.0,
+                        Date.valueOf(LocalDate.of(2025, 8, 23)),
+                        10
+                )
+        );
         return pendingSlots;
     }
 
@@ -94,7 +128,6 @@ public class GymOwnerService implements GymOwnerInterface {
     public List<Booking> getAllBookings() {
         System.out.println("getAllBookings method called.");
         System.out.println("Fetching all bookings...");
-        // Returns an empty list to simulate no bookings for now
         return new ArrayList<>();
     }
 

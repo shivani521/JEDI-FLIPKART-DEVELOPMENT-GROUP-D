@@ -15,15 +15,21 @@ public class CustomerService implements CustomerInterface {
     private List<Customer> hardcodedCustomers;
 
     public CustomerService() {
-        //hardcoded
         hardcodedCustomers = new ArrayList<>();
-        hardcodedCustomers.add(new Customer(1, "shivani", "shivani@example.com", "password123", "9876543210", "Bangalore"));
-        hardcodedCustomers.add(new Customer(2, "sharma", "sharma@example.com", "securepass", "1234567890", "Delhi"));
+        // Example hardcoded customers (adjust as needed)
+        Customer customer1 = new Customer("shivani", 1, "password123", "shivani@example.com", "Shivani Sharma", 1, "ACTIVE");
+        customer1.setPhone("9876543210");
+        customer1.setCustomerId(1);
+        hardcodedCustomers.add(customer1);
+
+        Customer customer2 = new Customer("sharma", 2, "securepass", "sharma@example.com", "Sharma Singh", 1, "ACTIVE");
+        customer2.setPhone("1234567890");
+        customer2.setCustomerId(2);
+        hardcodedCustomers.add(customer2);
     }
 
     @Override
     public List<FlipFitGym> viewAllGymCenters(String city) {
-        //hardcodedd values
         if (city.equalsIgnoreCase("Bangalore")) {
             List<FlipFitGym> gyms = new ArrayList<>();
             gyms.add(new FlipFitGym(1, "Fitness Hub", 101, "shivani", "Bangalore", 10, 500, 1, "GST12345"));
@@ -36,11 +42,10 @@ public class CustomerService implements CustomerInterface {
 
     @Override
     public List<Slot> viewAllFreeSlots(String gymId, LocalDate date) {
-        // Hardcoded slots for a specific gym
         if (gymId.equals("1") && date.isEqual(LocalDate.now())) {
             List<Slot> slots = new ArrayList<>();
-            slots.add(new Slot(1, 1, LocalDate.now(), LocalTime.of(8, 0)));
-            slots.add(new Slot(2, 1, LocalDate.now(), LocalTime.of(9, 0)));
+            // slots.add(new Slot(1, 1, LocalDate.now(), LocalTime.of(8, 0)));
+            // slots.add(new Slot(2, 1, LocalDate.now(), LocalTime.of(9, 0)));
             return slots;
         }
         return new ArrayList<>();
@@ -48,10 +53,9 @@ public class CustomerService implements CustomerInterface {
 
     @Override
     public List<Booking> viewAllBookings(String userId) {
-        // Hardcoded booking for user with ID 1
         if (userId.equals("1")) {
             List<Booking> bookings = new ArrayList<>();
-            bookings.add(new Booking(1, "1"));
+            // bookings.add(new Booking(1, 1));
             return bookings;
         }
         return new ArrayList<>();
@@ -60,25 +64,19 @@ public class CustomerService implements CustomerInterface {
     @Override
     public boolean bookSlot(int userId, String gymId, String slotId, LocalDate date, LocalTime time) {
         System.out.println("Booking slot " + slotId + " for user " + userId + " at gym " + gymId + " on " + date);
-        // Hardcoded logic to do booking success
         return true;
     }
 
     @Override
     public boolean cancelSlot(String bookingId) {
         System.out.println("Cancelling booking with ID: " + bookingId);
-        // Hardcoded logic to simulate cancellation success
-        if (bookingId.equals("B1")) {
-            return true;
-        }
-        return false;
+        return bookingId.equals("B1");
     }
 
     @Override
     public boolean checkValidCustomer(String userName, String password) {
-        // Hardcoded check
         for (Customer customer : hardcodedCustomers) {
-            if (customer.getUserName().equals(userName) && customer.getPassword().equals(password)) {
+            if (customer.getUsername().equals(userName) && customer.getPassword().equals(password)) {
                 return true;
             }
         }
@@ -88,9 +86,14 @@ public class CustomerService implements CustomerInterface {
     @Override
     public Customer registerCustomer(String userName, String password, String email, String phoneNo, String customerCity) {
         System.out.println("Registering new customer: " + userName);
-        // Simulate creation and return a new customer object
         int newUserId = hardcodedCustomers.size() + 1;
-        Customer newCustomer = new Customer(newUserId, userName, email, password, phoneNo, customerCity);
+        int newCustomerId = newUserId; // For demo, userId == customerId
+        String name = userName; // Or ask for real name separately
+        int roleId = 1; // Example role id for customer
+        String status = "ACTIVE";
+        Customer newCustomer = new Customer(userName, newUserId, password, email, name, roleId, status);
+        newCustomer.setPhone(phoneNo);
+        newCustomer.setCustomerId(newCustomerId);
         hardcodedCustomers.add(newCustomer);
         System.out.println("Customer registered successfully.");
         return newCustomer;
@@ -99,9 +102,8 @@ public class CustomerService implements CustomerInterface {
     @Override
     public boolean changePassword(String username, String oldPassword, String newPassword) {
         System.out.println("Changing password for user: " + username);
-        // Hardcoded logic for password change
         for (Customer customer : hardcodedCustomers) {
-            if (customer.getUserName().equals(username) && customer.getPassword().equals(oldPassword)) {
+            if (customer.getUsername().equals(username) && customer.getPassword().equals(oldPassword)) {
                 customer.setPassword(newPassword);
                 System.out.println("Password changed successfully.");
                 return true;
@@ -114,7 +116,7 @@ public class CustomerService implements CustomerInterface {
     @Override
     public Customer login(String userName, String password) {
         for (Customer customer : hardcodedCustomers) {
-            if (customer.getUserName().equals(userName) && customer.getPassword().equals(password)) {
+            if (customer.getUsername().equals(userName) && customer.getPassword().equals(password)) {
                 System.out.println("Login successful for user: " + userName);
                 return customer;
             }

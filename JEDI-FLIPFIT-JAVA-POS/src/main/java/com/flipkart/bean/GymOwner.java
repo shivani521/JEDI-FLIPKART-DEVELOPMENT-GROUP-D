@@ -4,46 +4,27 @@ import java.util.List;
 
 public class GymOwner extends User {
 
-    private String aadharCardNumber;
-    private String panNumber;
-    private List<Integer> gymCenterId;
-    private boolean status;
+    private int gymOwnerId;
+    private String accountNumber;
 
-    public GymOwner(int id, String name, String email, String password, String phoneNO, String aadharCardNumber, String panNumber, List<Integer> gymCenterId, boolean status) {
-        super(id, name, email, password,phoneNO);
-        this.aadharCardNumber = aadharCardNumber;
-        this.panNumber = panNumber;
-        this.gymCenterId = gymCenterId;
-        this.status = status;
+
+    public GymOwner(String username, int userId, String password, String email, String name, int roleId, String status) {
+        super(username, userId, password, email, name, roleId, status);
     }
 
-    public boolean isStatus() {
-        return status;
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
-    public List<Integer> getGymCenterId() {
-        return gymCenterId;
+    public int getGymOwnerId() {
+        return gymOwnerId;
     }
 
-    public void setGymCenterId(List<Integer> gymCenterId) {
-        this.gymCenterId = gymCenterId;
-    }
-
-    public String getAadharCardNumber() {
-        return aadharCardNumber;
-    }
-
-    public void setAadharCardNumber(String aadharCardNumber) {
-        this.aadharCardNumber = aadharCardNumber;
-    }
-    public String getPanNumber() {
-        return panNumber;
-    }
-    public void setPanNumber(String panNumber) {
-        this.panNumber = panNumber;
+    public void setGymOwnerId(int gymOwnerId) {
+        this.gymOwnerId = gymOwnerId;
     }
 }

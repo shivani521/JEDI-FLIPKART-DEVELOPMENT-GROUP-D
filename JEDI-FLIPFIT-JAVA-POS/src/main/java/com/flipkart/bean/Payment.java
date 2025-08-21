@@ -1,11 +1,14 @@
 package com.flipkart.bean;
 
 public class Payment {
+    private String transactionId;
     private int paymentId;
-    private String bookingId;
-    private float amountPaid;
+    static int paymentCounter = 0;
 
-    public Payment() {}
+    public Payment(int paymentId, String transactionId) {
+        this.paymentId = paymentId;
+        this.transactionId = transactionId;
+    }
 
     public int getPaymentId() {
         return paymentId;
@@ -15,17 +18,19 @@ public class Payment {
         this.paymentId = paymentId;
     }
 
-    public String getBookingId() {
-        return bookingId;
-    }
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public float getAmountPaid() {
-        return amountPaid;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
-    public void setAmountPaid(float amountPaid) {
-        this.amountPaid = amountPaid;
+
+    public static int getPaymentCounter() {
+        return paymentCounter;
+    }
+
+    public static void setPaymentCounter(int paymentCounter) {
+        Payment.paymentCounter = paymentCounter;
     }
 }

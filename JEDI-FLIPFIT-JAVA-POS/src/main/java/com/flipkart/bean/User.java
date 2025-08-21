@@ -1,46 +1,39 @@
 package com.flipkart.bean;
 
 public class User {
-    private String userName;
-    private int userID;
-    private String emailID;
+    private int userId;
+    private String username;
     private String password;
-    private String phoneNO;
+    private String email;
+    private String name;
+    private int roleId;
+    private String status;
 
-    public User (int userId, String userName, String emailID, String password, String phoneNO) {
-        this.userID = userId;
-        this.userName = userName;
-        this.emailID = emailID;
+    public User(String username, int userId, String password, String email, String name, int roleId, String status) {
+        this.username = username;
+        this.userId = userId;
         this.password = password;
-        this.phoneNO = phoneNO;
+        this.email = email;
+        this.name = name;
+        this.roleId = roleId;
+        this.status = status;
     }
 
-    public int getUserID() {
-        return userID;
+
+    public String getUsername() {
+        return username;
     }
 
-
-    public String getUserName() {
-        return userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public int getUserId() {
+        return userId;
     }
 
-    public String getEmailID() {
-        return emailID;
-    }
-
-    public void setEmail(String emailID) {
-        this.emailID = emailID;
-    }
-    public String getPhone() {
-        return phoneNO;
-    }
-
-    public void setphone(String phoneNO) {
-        this.phoneNO = phoneNO;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getPassword() {
@@ -51,8 +44,35 @@ public class User {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
