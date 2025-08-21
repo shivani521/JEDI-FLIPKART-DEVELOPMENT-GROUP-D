@@ -13,7 +13,7 @@ public class Booking {
         return bookingId;
     }
 
-    public void setBookingID(int bookingID) {
+    public void setBookingID(int     bookingID) {
         this.bookingId = bookingID;
     }
 

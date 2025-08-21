@@ -1,5 +1,6 @@
 package com.flipkart.business;
 
+import com.flipkart.bean.Booking;
 import com.flipkart.bean.FlipFitGym;
 import com.flipkart.bean.Slot;
 
@@ -14,4 +15,5 @@ public interface GymOwnerInterface {
     public boolean changePassword(String username, String oldPassword, String newPassword);
     public List<FlipFitGym> getPendingGyms();
     public List<Slot> getPendingSlots();
+    public List<Booking> getAllBookings();
 }
