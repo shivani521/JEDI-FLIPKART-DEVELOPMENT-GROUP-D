@@ -12,6 +12,10 @@ public class GymOwner extends User {
         super(username, userId, password, email, name, roleId, status);
     }
 
+    public GymOwner() {
+        super();
+    }
+
     public String getAccountNumber() {
         return accountNumber;
     }
