@@ -15,6 +15,8 @@ public class GymFlipFitApplication {
     private static GymOwnerInterface gymOwnerClient=new GymOwnerService();
     private static CustomerService customerService = new CustomerService();
 
+//    private static GymFlipFitOwnerMenu gymFlipFitOwnerMenu=new GymFlipFitOwnerMenu();
+
     private static GymFlipFitAdminMenu gymFlipFitAdminMenu=new GymFlipFitAdminMenu();
     private static GymFlipFitCustomerMenu gymFlipFitCustomerMenu;
     private static GymFlipFitOwnerMenu gymFlipFitOwnerMenu=new GymFlipFitOwnerMenu();
@@ -29,7 +31,7 @@ public class GymFlipFitApplication {
 
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
-
+`
         switch(choice) {
             case 1:
                 login();
@@ -85,7 +87,7 @@ private static void login() {
     else if (choice == 3)
     {
         gymOwnerClient.login(userName,password);
-        gymFlipFitOwnerMenu.OwnerMainPage();
+        gymFlipFitOwnerMenu.ownerMainPage();
     }
 
     else
