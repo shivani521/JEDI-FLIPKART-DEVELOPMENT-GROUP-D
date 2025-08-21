@@ -15,3 +15,4 @@ public interface AdminInterface {
     public void rejectSlot(int gymOwnerId);
 
 }
+
