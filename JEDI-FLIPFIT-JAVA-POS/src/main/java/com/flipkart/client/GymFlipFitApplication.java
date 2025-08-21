@@ -6,7 +6,6 @@ import com.flipkart.client.*;
 
 import java.util.*;
 
-///Users/garvit.mukhija/Documents/JEDI-FLIPFIT-JAVA-POS/JEDI-FLIPFIT-JAVA-POS/src/main/java/com/flipkart
 
 public class GymFlipFitApplication {
 

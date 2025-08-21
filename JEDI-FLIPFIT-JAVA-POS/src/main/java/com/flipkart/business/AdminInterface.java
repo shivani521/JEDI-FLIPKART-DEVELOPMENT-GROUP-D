@@ -11,6 +11,7 @@ public interface AdminInterface {
     public boolean changePassword(String userName, String oldPassword, String newPassword);
     public void login(String userName, String password);
     public boolean removeGymOwner(int gymOwnerId);
-
+    public void approveSlot(int gymOwnerId);
+    public void rejectSlot(int gymOwnerId);
 
 }

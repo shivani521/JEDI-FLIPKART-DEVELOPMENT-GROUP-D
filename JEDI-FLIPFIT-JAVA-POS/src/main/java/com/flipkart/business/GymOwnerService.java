@@ -1,5 +1,6 @@
 package com.flipkart.business;
 
+import com.flipkart.bean.Booking;
 import com.flipkart.bean.FlipFitGym;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Slot;
@@ -44,6 +45,11 @@ public class GymOwnerService implements GymOwnerInterface {
 
     @Override
     public List<Slot> getPendingSlots() {
+        return List.of();
+    }
+
+    @Override
+    public List<Booking> getAllBookings() {
         return List.of();
     }
 }
