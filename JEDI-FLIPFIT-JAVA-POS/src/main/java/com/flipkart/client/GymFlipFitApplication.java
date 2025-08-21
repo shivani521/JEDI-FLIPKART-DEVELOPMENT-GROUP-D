@@ -112,6 +112,8 @@ private static void login() {
         Customer newCustomer = customerService.registerCustomer(username, password, email, phoneNo, city);
         if (newCustomer != null) {
             System.out.println("Registration successful! You can now log in with your credentials.");
+           // customerService.login(username, password);
+            //gymFlipFitCustomerMenu.customerMainPage();
         } else {
             System.out.println("Registration failed. Please try again.");
         }
