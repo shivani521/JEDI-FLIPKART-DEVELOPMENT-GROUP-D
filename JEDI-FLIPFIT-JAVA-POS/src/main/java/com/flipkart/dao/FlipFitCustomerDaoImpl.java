@@ -3,38 +3,54 @@ package com.flipkart.dao;
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.User;
 import com.flipkart.utils.DbConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlipFitCustomerDaoImpl implements FlipFitCustomerDAOInterface {
 
     @Override
-    public void createCustomer(int customerId, int userId, String phone) {
-        try {
-            Connection con = DbConnection.getConnection();
-            String queryStr = "INSERT INTO FlipFitCustomers (customerId,userId, phone) VALUES(?,?,?)";
-            PreparedStatement stmt = con.prepareStatement(queryStr);
-            stmt.setInt(1, userId);
-            stmt.setString(2, phone);
-            int result = stmt.executeUpdate();
-            if (result > 0) {
-                System.out.println("Customer created successfully!");
+    public int createUser(String username, String password, String email, String name, int roleId, String status) throws SQLException {
+        String sql = "INSERT INTO User (username, password, email, name, roleId, status) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection con = DbConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            stmt.setString(3, email);
+            stmt.setString(4, name);
+            stmt.setInt(5, roleId);
+            stmt.setString(6, status);
+
+            stmt.executeUpdate();
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) return rs.getInt(1);
             }
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
         }
+        throw new SQLException("Failed to insert user");
     }
 
     @Override
-    public Customer getCustomerByUser(User user) {
-        try {
-            Connection con = DbConnection.getConnection();
-            String queryStr = "SELECT * FROM FlipFitCustomers WHERE userId=?";
-            PreparedStatement stmt = con.prepareStatement(queryStr);
+    public int createCustomer(int userId, String phone) throws SQLException {
+        String sql = "INSERT INTO Customer (userId, phone) VALUES (?, ?)";
+        try (Connection con = DbConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, userId);
+            stmt.setString(2, phone);
+
+            stmt.executeUpdate();
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        }
+        throw new SQLException("Failed to insert customer");
+    }
+
+    @Override
+    public Customer getCustomerByUser(User user) throws SQLException {
+        String queryStr = "SELECT * FROM Customer WHERE userId=?";
+        try (Connection con = DbConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(queryStr)) {
             stmt.setInt(1, user.getUserId());
             ResultSet result = stmt.executeQuery();
             if (result.next()) {
@@ -43,22 +59,18 @@ public class FlipFitCustomerDaoImpl implements FlipFitCustomerDAOInterface {
                 customer.setPhone(result.getString("phone"));
                 return customer;
             }
-        } catch (Exception e) {
-            System.out.println(e);
         }
         return null;
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers() throws SQLException {
         List<Customer> customers = new ArrayList<>();
-        try {
-            Connection con = DbConnection.getConnection();
-            String queryStr = "SELECT u.userId, u.username, u.email, u.name, u.password, u.roleId, u.status, c.customerId, c.phone " +
-                    "FROM FlipFitUsers u " +
-                    "INNER JOIN FlipFitCustomers c ON u.userId = c.userId";
-            PreparedStatement stmt = con.prepareStatement(queryStr);
-            ResultSet result = stmt.executeQuery();
+        String queryStr = "SELECT u.userId, u.username, u.email, u.name, u.password, u.roleId, u.status, c.customerId, c.phone " +
+                "FROM User u INNER JOIN Customer c ON u.userId = c.userId";
+        try (Connection con = DbConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(queryStr);
+             ResultSet result = stmt.executeQuery()) {
             while (result.next()) {
                 Customer customer = new Customer(
                         result.getString("username"),
@@ -73,9 +85,6 @@ public class FlipFitCustomerDaoImpl implements FlipFitCustomerDAOInterface {
                 customer.setPhone(result.getString("phone"));
                 customers.add(customer);
             }
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
         }
         return customers;
     }
