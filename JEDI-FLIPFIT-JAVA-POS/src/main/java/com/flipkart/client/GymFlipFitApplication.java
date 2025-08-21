@@ -1,5 +1,6 @@
 package com.flipkart.client;
 
+import com.flipkart.bean.Customer;
 import com.flipkart.business.*;
 import com.flipkart.client.*;
 
@@ -12,10 +13,13 @@ public class GymFlipFitApplication {
     private static AdminInterface adminClient=new AdminService();
     private static CustomerInterface customerClient=new CustomerService();
     private static GymOwnerInterface gymOwnerClient=new GymOwnerService();
+    private static CustomerService customerService = new CustomerService();
 
     private static GymFlipFitAdminMenu gymFlipFitAdminMenu=new GymFlipFitAdminMenu();
-    private static GymFlipFitCustomerMenu gymFlipFitCustomerMenu=new GymFlipFitCustomerMenu();
+    private static GymFlipFitCustomerMenu gymFlipFitCustomerMenu;
     private static GymFlipFitOwnerMenu gymFlipFitOwnerMenu=new GymFlipFitOwnerMenu();
+
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args)
     {
@@ -68,10 +72,14 @@ private static void login() {
         gymFlipFitAdminMenu.adminMainPage();
     }
 
-    else if (choice == 2)
-    {
-        customerClient.login(userName,password);
-        gymFlipFitCustomerMenu.customerMainPage();
+    else if (choice == 2) {
+        Customer loggedInCustomer = customerService.login(userName, password);
+        if (loggedInCustomer != null) {
+            gymFlipFitCustomerMenu = new GymFlipFitCustomerMenu(customerService, loggedInCustomer);
+            gymFlipFitCustomerMenu.customerMainPage();
+        } else {
+            System.out.println("Invalid login credentials for customer.");
+        }
     }
 
     else if (choice == 3)
@@ -86,9 +94,26 @@ private static void login() {
     }
 }
 
-private static void registerCustomer() {
-    System.out.println("Register Customer");
-}
+    private static void registerCustomer() {
+        System.out.println("Registering as a new Customer:");
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        System.out.print("Enter email: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter phone number: ");
+        String phoneNo = scanner.nextLine();
+        System.out.print("Enter your city: ");
+        String city = scanner.nextLine();
+
+        Customer newCustomer = customerService.registerCustomer(username, password, email, phoneNo, city);
+        if (newCustomer != null) {
+            System.out.println("Registration successful! You can now log in with your credentials.");
+        } else {
+            System.out.println("Registration failed. Please try again.");
+        }
+    }
 
 private static void registerGymOwner() {
         System.out.println("Register Gym Owner");
