@@ -78,7 +78,7 @@ private static void login() {
     else if (choice == 3)
     {
         gymOwnerClient.login(userName,password);
-        gymFlipFitOwnerMenu.OwnerMainPage();
+        gymFlipFitOwnerMenu.ownerMainPage();
     }
 
     else
