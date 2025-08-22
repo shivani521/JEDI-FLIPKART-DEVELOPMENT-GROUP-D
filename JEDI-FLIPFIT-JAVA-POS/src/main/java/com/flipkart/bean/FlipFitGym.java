@@ -5,23 +5,27 @@ public class FlipFitGym {
     private int gymId;
     private String gymName;
     private int ownerId;
-    private String ownerName;
+   // private String ownerName;
     private String gymAddress;
     private int numberOfSlots;
     private int cost;
     private int gymStatus;
     private String ownerGstNumber;
 
-    public FlipFitGym(int gymId, String gymName, int ownerId, String ownerName, String gymAddress, int numberOfSlots, int cost, int gymStatus, String ownerGstNumber) {
+    public FlipFitGym(int gymId, String gymName, int ownerId,  String gymAddress, int numberOfSlots, int cost, int gymStatus, String ownerGstNumber) {
         this.gymId = gymId;
         this.gymName = gymName;
         this.ownerId = ownerId;
-        this.ownerName = ownerName;
+        //this.ownerName = ownerName;
         this.gymAddress = gymAddress;
         this.numberOfSlots = numberOfSlots;
         this.cost = cost;
         this.gymStatus = gymStatus;
         this.ownerGstNumber = ownerGstNumber;
+    }
+
+    public FlipFitGym() {
+
     }
 
     public int getNumberOfSlots() {
@@ -56,13 +60,6 @@ public class FlipFitGym {
         this.ownerId = ownerId;
     }
 
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
 
     public String getGymAddress() {
         return gymAddress;
@@ -95,4 +92,12 @@ public class FlipFitGym {
         this.ownerGstNumber = ownerGstNumber;
     }
 
+    public void setCity(String city) {
+    }
+
+    public void setAddress(String address) {
+    }
+
+    public void setStatus(String status) {
+    }
 }

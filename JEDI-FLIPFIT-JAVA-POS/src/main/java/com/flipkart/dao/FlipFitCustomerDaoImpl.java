@@ -119,4 +119,17 @@ public class FlipFitCustomerDaoImpl implements FlipFitCustomerDAOInterface {
         }
         return null;
     }
+
+    // New: change password (returns true if password changed)
+    public boolean changePassword(String username, String oldPassword, String newPassword) throws SQLException {
+        String sql = "UPDATE User SET password = ? WHERE username = ? AND password = ?";
+        try (Connection con = DbConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, newPassword);
+            ps.setString(2, username);
+            ps.setString(3, oldPassword);
+            int updated = ps.executeUpdate();
+            return updated == 1;
+        }
+    }
 }
