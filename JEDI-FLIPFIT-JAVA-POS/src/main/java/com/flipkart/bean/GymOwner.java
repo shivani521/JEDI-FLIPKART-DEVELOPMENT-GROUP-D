@@ -1,12 +1,11 @@
 package com.flipkart.bean;
 
-import java.util.List;
-
 public class GymOwner extends User {
 
     private int gymOwnerId;
     private String accountNumber;
-
+    private String phone;
+    private String panNumber;
 
     public GymOwner(String username, int userId, String password, String email, String name, int roleId, String status) {
         super(username, userId, password, email, name, roleId, status);
@@ -26,5 +25,21 @@ public class GymOwner extends User {
 
     public void setGymOwnerId(int gymOwnerId) {
         this.gymOwnerId = gymOwnerId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPanNumber() {
+        return panNumber;
+    }
+
+    public void setPanNumber(String panNumber) {
+        this.panNumber = panNumber;
     }
 }

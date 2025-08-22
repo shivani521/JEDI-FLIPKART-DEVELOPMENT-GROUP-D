@@ -10,4 +10,7 @@ public interface FlipFitCustomerDAOInterface {
     int createCustomer(int userId, String phone) throws SQLException;
     Customer getCustomerByUser(User user) throws SQLException;
     List<Customer> getAllCustomers() throws SQLException;
+
+    // New: authenticate and return the Customer (joins User + Customer)
+    Customer getCustomerByCredentials(String username, String password) throws SQLException;
 }

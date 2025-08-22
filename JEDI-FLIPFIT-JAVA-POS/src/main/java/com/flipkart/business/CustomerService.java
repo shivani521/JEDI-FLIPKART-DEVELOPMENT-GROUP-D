@@ -13,12 +13,10 @@ import java.util.List;
 
 public class CustomerService implements CustomerInterface {
 
-    private List<Customer> hardcodedCustomers;
     private FlipFitCustomerDaoImpl customerDao = new FlipFitCustomerDaoImpl();
 
     public CustomerService() {
-        hardcodedCustomers = new ArrayList<>();
-        // Optionally, add demo customers here for testing
+        // DB-backed service — no hardcoded in-memory users
     }
 
     @Override
@@ -59,12 +57,13 @@ public class CustomerService implements CustomerInterface {
 
     @Override
     public boolean checkValidCustomer(String userName, String password) {
-        for (Customer customer : hardcodedCustomers) {
-            if (customer.getUsername().equals(userName) && customer.getPassword().equals(password)) {
-                return true;
-            }
+        try {
+            Customer c = customerDao.getCustomerByCredentials(userName, password);
+            return c != null;
+        } catch (Exception e) {
+            System.out.println("Error checking valid customer: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -84,6 +83,7 @@ public class CustomerService implements CustomerInterface {
             Customer customer = new Customer(username, userId, password, email, name, roleId, status);
             customer.setPhone(phoneNo);
             customer.setCustomerId(customerId);
+
             return customer;
         } catch (Exception e) {
             System.out.println("Error registering customer: " + e.getMessage());
@@ -93,22 +93,20 @@ public class CustomerService implements CustomerInterface {
 
     @Override
     public boolean changePassword(String username, String oldPassword, String newPassword) {
-        for (Customer customer : hardcodedCustomers) {
-            if (customer.getUsername().equals(username) && customer.getPassword().equals(oldPassword)) {
-                customer.setPassword(newPassword);
-                return true;
-            }
-        }
+        // TODO: implement DB-backed password change via DAO
+        // This method currently is unimplemented for DB — see notes below.
         return false;
     }
 
     @Override
     public Customer login(String userName, String password) {
-        for (Customer customer : hardcodedCustomers) {
-            if (customer.getUsername().equals(userName) && customer.getPassword().equals(password)) {
-                return customer;
-            }
+        try {
+            // Authenticate against DB only
+            System.out.println("*****");
+            return customerDao.getCustomerByCredentials(userName, password);
+        } catch (Exception e) {
+            System.out.println("Error during login: " + e.getMessage());
+            return null;
         }
-        return null;
     }
 }

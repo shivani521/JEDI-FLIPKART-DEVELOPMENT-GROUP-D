@@ -37,7 +37,7 @@ public class GymFlipFitAdminMenu {
         int choice = Integer.parseInt(sc.nextLine());
         switch (choice) {
             case 1:
-                List<GymOwner> pendingGymOwnerList = GymOwnerService.getPendingGymOwners();
+                //List<GymOwner> pendingGymOwnerList = GymOwnerService.getPendingGymOwners();
 //                showPendingGymOwners(pendingGymOwnerList);
                 break;
             case 2:
