@@ -42,7 +42,7 @@ public class CustomerService implements CustomerInterface {
     public List<Slot> viewAllFreeSlots(String gymId, LocalDate date) {
         try {
             int gid = Integer.parseInt(gymId);
-            return slotDao.getAvailableSlots(gid, Date.valueOf(date));
+            return slotDao.getSlotsByGym(gid, Date.valueOf(date));
         } catch (NumberFormatException e) {
             System.out.println("Invalid gym id: " + gymId);
             return new ArrayList<>();
@@ -56,7 +56,7 @@ public class CustomerService implements CustomerInterface {
     public List<Booking> viewAllBookings(String userId) {
         try {
             int uid = Integer.parseInt(userId);
-            //return bookingDao.getBookingsByCustomer(uid);
+            return bookingDao.getBookingsByCustomer(uid);
         } catch (NumberFormatException e) {
             System.out.println("Invalid user id: " + userId);
             return new ArrayList<>();
@@ -64,7 +64,6 @@ public class CustomerService implements CustomerInterface {
             System.out.println("Error fetching bookings: " + e.getMessage());
             return new ArrayList<>();
         }
-        return List.of();
     }
 
     @Override
@@ -74,8 +73,14 @@ public class CustomerService implements CustomerInterface {
             int sid = Integer.parseInt(slotId);
             Date sqlDate = Date.valueOf(date);
             Time sqlTime = Time.valueOf(time);
-           // int bookingId = bookingDao.createBooking(userId, gid, sid, sqlDate, sqlTime);
-           // return bookingId > 0;
+            int bookingId = bookingDao.createBooking(userId, gid, sid, sqlDate, sqlTime);
+            if (bookingId > 0) {
+                System.out.println("Booking created with id: " + bookingId);
+                return true;
+            } else {
+                System.out.println("Booking failed (no seats or error).");
+                return false;
+            }
         } catch (NumberFormatException e) {
             System.out.println("Invalid gymId/slotId number.");
             return false;
@@ -83,14 +88,16 @@ public class CustomerService implements CustomerInterface {
             System.out.println("Error while booking slot: " + e.getMessage());
             return false;
         }
-        return true;
     }
 
     @Override
     public boolean cancelSlot(String bookingId) {
         try {
             int bid = Integer.parseInt(bookingId);
-           // return bookingDao.cancelBooking(bid);
+            boolean ok = bookingDao.cancelBooking(bid);
+            if (ok) System.out.println("Booking cancelled: " + bookingId);
+            else System.out.println("Cancellation failed for booking: " + bookingId);
+            return ok;
         } catch (NumberFormatException e) {
             System.out.println("Invalid booking id: " + bookingId);
             return false;
@@ -98,7 +105,6 @@ public class CustomerService implements CustomerInterface {
             System.out.println("Error while cancelling booking: " + e.getMessage());
             return false;
         }
-        return true;
     }
 
     @Override

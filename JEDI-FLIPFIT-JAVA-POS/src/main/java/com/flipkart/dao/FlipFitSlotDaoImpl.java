@@ -144,7 +144,30 @@ public class FlipFitSlotDaoImpl {
         return slots;
     }
 
-    public List<Slot> getAvailableSlots(int gid, Date date) {
-        return List.of();
+    /**
+     * Helper used by booking transaction: lock row and return seatsAvailable (FOR UPDATE).
+     * Caller must pass an open Connection and manage commit/rollback.
+     */
+    public Integer getSeatsForUpdate(Connection con, int slotId) throws SQLException {
+        String sql = "SELECT seatsAvailable FROM Slot WHERE slotId = ? FOR UPDATE";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, slotId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt("seatsAvailable");
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Update seatsAvailable for a slot (used inside transaction).
+     */
+    public int updateSeats(Connection con, int slotId, int newSeats) throws SQLException {
+        String sql = "UPDATE Slot SET seatsAvailable = ? WHERE slotId = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, newSeats);
+            ps.setInt(2, slotId);
+            return ps.executeUpdate();
+        }
     }
 }

@@ -145,7 +145,8 @@ public class GymOwnerService implements GymOwnerInterface {
     public List<Booking> getAllBookings() {
         try {
             // global list; if you prefer owner-scoped, use bookingDao.getBookingsByOwner(ownerId)
-            return bookingDao.getAllBookings();
+           // return bookingDao.getAllBookings();
+            return List.of();
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
