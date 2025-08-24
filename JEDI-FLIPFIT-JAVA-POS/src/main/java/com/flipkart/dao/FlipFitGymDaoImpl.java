@@ -8,20 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO for Gym table.
- *
- * Table columns expected:
- *  - gymId (INT AUTO_INCREMENT PRIMARY KEY)
- *  - gymName (VARCHAR)
- *  - ownerId (INT)
- *  - gymAddress (VARCHAR)
- *  - numberOfSlots (INT)
- *  - cost (INT)
- *  - gymStatus (INT)    -- e.g. 0 = PENDING, 1 = ACTIVE, 2 = REJECTED
- *  - ownerGstNumber (VARCHAR)
+ * The `FlipFitGymDaoImpl` class provides the data access layer for gym-related operations.
+ * It handles all database interactions for gym data, including creating, retrieving, updating, and deleting gym records.
  */
 public class FlipFitGymDaoImpl {
 
+    /**
+     * Creates a new gym record in the database.
+     *
+     * @param gym The `FlipFitGym` object containing the gym's details.
+     * @param ownerId The unique ID of the gym's owner.
+     * @return The generated `gymId` of the newly created gym.
+     * @throws SQLException if a database access error occurs.
+     */
     public int createGym(FlipFitGym gym, int ownerId) throws SQLException {
         String sql = "INSERT INTO FlipFitGym (gymName, ownerId, gymAddress, numberOfSlots, cost, gymStatus, ownerGstNumber) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -42,6 +41,13 @@ public class FlipFitGymDaoImpl {
         throw new SQLException("Failed to insert gym");
     }
 
+    /**
+     * Deletes a gym record from the database using its unique ID.
+     *
+     * @param gymId The unique ID of the gym to be deleted.
+     * @return The number of rows affected (should be 1 if successful).
+     * @throws SQLException if a database access error occurs.
+     */
     public int deleteGym(int gymId) throws SQLException {
         String sql = "DELETE FROM Gym WHERE gymId = ?";
         try (Connection con = DbConnection.getConnection();
@@ -51,6 +57,13 @@ public class FlipFitGymDaoImpl {
         }
     }
 
+    /**
+     * Updates an existing gym record in the database.
+     *
+     * @param gym The `FlipFitGym` object with the updated details.
+     * @return The number of rows affected (should be 1 if successful).
+     * @throws SQLException if a database access error occurs.
+     */
     public int updateGym(FlipFitGym gym) throws SQLException {
         String sql = "UPDATE Gym SET gymName = ?, gymAddress = ?, numberOfSlots = ?, cost = ?, gymStatus = ?, ownerGstNumber = ? WHERE gymId = ?";
         try (Connection con = DbConnection.getConnection();
@@ -66,6 +79,13 @@ public class FlipFitGymDaoImpl {
         }
     }
 
+    /**
+     * Retrieves a `FlipFitGym` object from the database using its unique ID.
+     *
+     * @param gymId The unique ID of the gym to retrieve.
+     * @return The `FlipFitGym` object if a matching record is found; otherwise, `null`.
+     * @throws SQLException if a database access error occurs.
+     */
     public FlipFitGym getGymById(int gymId) throws SQLException {
         String sql = "SELECT gymId, gymName, ownerId, gymAddress, numberOfSlots, cost, gymStatus, ownerGstNumber FROM Gym WHERE gymId = ?";
         try (Connection con = DbConnection.getConnection();
@@ -89,6 +109,12 @@ public class FlipFitGymDaoImpl {
         return null;
     }
 
+    /**
+     * Retrieves a list of all gyms with a pending status (`gymStatus = 0`).
+     *
+     * @return A list of `FlipFitGym` objects that are pending approval.
+     * @throws SQLException if a database access error occurs.
+     */
     public List<FlipFitGym> getPendingGyms() throws SQLException {
         List<FlipFitGym> gyms = new ArrayList<>();
         String sql = "SELECT gymId, gymName, ownerId, gymAddress, numberOfSlots, cost, gymStatus, ownerGstNumber FROM FlipFitGym WHERE gymStatus = 0";
@@ -111,6 +137,13 @@ public class FlipFitGymDaoImpl {
         return gyms;
     }
 
+    /**
+     * Retrieves a list of all gyms associated with a specific gym owner.
+     *
+     * @param ownerId The unique ID of the gym owner.
+     * @return A list of `FlipFitGym` objects owned by the specified owner.
+     * @throws SQLException if a database access error occurs.
+     */
     public List<FlipFitGym> getGymsByOwner(int ownerId) throws SQLException {
         List<FlipFitGym> gyms = new ArrayList<>();
         String sql = "SELECT gymId, gymName, ownerId, gymAddress, numberOfSlots, cost, gymStatus, ownerGstNumber FROM FlipFitGym WHERE ownerId = ?";
