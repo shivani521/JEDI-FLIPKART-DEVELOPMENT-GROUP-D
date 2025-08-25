@@ -25,8 +25,8 @@ public class AdminService implements AdminInterface{
     }
 
     @Override
-    public void login(String userName, String password) {
-
+    public boolean login(String userName, String password) {
+    return true;
     }
 
     @Override

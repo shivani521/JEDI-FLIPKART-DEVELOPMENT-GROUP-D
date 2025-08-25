@@ -52,12 +52,13 @@ public class FlipFitCustomerDaoImpl implements FlipFitCustomerDAOInterface {
         try (Connection con = DbConnection.getConnection();
              PreparedStatement stmt = con.prepareStatement(queryStr)) {
             stmt.setInt(1, user.getUserId());
-            ResultSet result = stmt.executeQuery();
-            if (result.next()) {
-                Customer customer = new Customer(user.getUsername(), user.getUserId(), user.getPassword(), user.getEmail(), user.getName(), user.getRoleId(), user.getStatus());
-                customer.setCustomerId(result.getInt("customerId"));
-                customer.setPhone(result.getString("phone"));
-                return customer;
+            try (ResultSet result = stmt.executeQuery()) {
+                if (result.next()) {
+                    Customer customer = new Customer(user.getUsername(), user.getUserId(), user.getPassword(), user.getEmail(), user.getName(), user.getRoleId(), user.getStatus());
+                    customer.setCustomerId(result.getInt("customerId"));
+                    customer.setPhone(result.getString("phone"));
+                    return customer;
+                }
             }
         }
         return null;
@@ -87,5 +88,48 @@ public class FlipFitCustomerDaoImpl implements FlipFitCustomerDAOInterface {
             }
         }
         return customers;
+    }
+
+    // New method: fetch customer by username + password
+    @Override
+    public Customer getCustomerByCredentials(String username, String password) throws SQLException {
+        String queryStr = "SELECT u.userId, u.username, u.password, u.email, u.name, u.roleId, u.status, c.customerId, c.phone " +
+                "FROM User u INNER JOIN Customer c ON u.userId = c.userId " +
+                "WHERE u.username = ? AND u.password = ?";
+        try (Connection con = DbConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(queryStr)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Customer customer = new Customer(
+                            rs.getString("username"),
+                            rs.getInt("userId"),
+                            rs.getString("password"),
+                            rs.getString("email"),
+                            rs.getString("name"),
+                            rs.getInt("roleId"),
+                            rs.getString("status")
+                    );
+                    customer.setCustomerId(rs.getInt("customerId"));
+                    customer.setPhone(rs.getString("phone"));
+                    return customer;
+                }
+            }
+        }
+        return null;
+    }
+
+    // New: change password (returns true if password changed)
+    public boolean changePassword(String username, String oldPassword, String newPassword) throws SQLException {
+        String sql = "UPDATE User SET password = ? WHERE username = ? AND password = ?";
+        try (Connection con = DbConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, newPassword);
+            ps.setString(2, username);
+            ps.setString(3, oldPassword);
+            int updated = ps.executeUpdate();
+            return updated == 1;
+        }
     }
 }

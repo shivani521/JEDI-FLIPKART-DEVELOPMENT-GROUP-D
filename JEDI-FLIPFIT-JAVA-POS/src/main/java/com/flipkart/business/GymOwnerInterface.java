@@ -33,7 +33,7 @@ public interface GymOwnerInterface {
     /// //////Gym owner services///////
     public boolean login (String userName, String password);
     public boolean register (int userId, String userName, String email, String password, String adharCardNumber,
-                             List<Integer> gymCenterId);
+                             List<Integer> gymCenterId,String status);
     public GymOwner createGymOwner(int userId, String userName, String email, String password, String phoneNumber,String adharCardNumber,String panNumber,List<Integer> gymCenterId,boolean status) ;
     public boolean createGym(int gymId,String gymName,int ownerId,String ownerName,String gymAddress,int numberOfSlots,int cost,int gymStatus,String ownerGstNumber);
     public void deleteGym(int gymId);

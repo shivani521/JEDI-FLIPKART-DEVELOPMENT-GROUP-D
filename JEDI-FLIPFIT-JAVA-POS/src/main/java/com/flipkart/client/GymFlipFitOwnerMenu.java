@@ -76,7 +76,8 @@ public class GymFlipFitOwnerMenu {
         String password = sc.nextLine();
         System.out.print("Enter Aadhaar card number: ");
         String adharCardNumber = sc.nextLine();
-
+        System.out.println("Enter status");
+        String status = sc.nextLine();
         List<Integer> gymCenterIds = new ArrayList<>();
         System.out.println("Enter gym center IDs (enter 0 to finish):");
         int gymCenterId;
@@ -84,7 +85,7 @@ public class GymFlipFitOwnerMenu {
             gymCenterIds.add(gymCenterId);
         }
 
-        gymOwnerService.register(userId, userName, email, password, adharCardNumber, gymCenterIds);
+        gymOwnerService.register(userId, userName, email, password, adharCardNumber, gymCenterIds,status);
     }
 
     private void displayMenu() {

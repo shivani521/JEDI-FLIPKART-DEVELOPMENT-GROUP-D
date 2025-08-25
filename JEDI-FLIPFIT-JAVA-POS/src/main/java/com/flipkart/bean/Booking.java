@@ -1,12 +1,14 @@
 package com.flipkart.bean;
 
-import java.sql.Time;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Booking {
     private int bookingId;
     private int customerId;
+    private int gymId;
+    private int slotId;
+    private Date bookingDate;
     private String bookingStatus;
     private int paymentId;
     private Timestamp createdAt;
@@ -19,6 +21,9 @@ public class Booking {
         this.createdAt = createdAt;
     }
 
+    public Booking() {
+
+    }
 
     public int getBookingId() {
         return bookingId;
@@ -34,6 +39,30 @@ public class Booking {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public int getGymId() {
+        return gymId;
+    }
+
+    public void setGymId(int gymId) {
+        this.gymId = gymId;
+    }
+
+    public int getSlotId() {
+        return slotId;
+    }
+
+    public void setSlotId(int slotId) {
+        this.slotId = slotId;
+    }
+
+    public Date getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
     }
 
     public String getBookingStatus() {
