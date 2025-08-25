@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The `GymFlipFitApplication` class is the main entry point for the FlipFit application.
+ * It provides a command-line interface for users to log in, register as either a customer
+ * or a gym owner, and navigate to their respective menus.
+ */
 public class GymFlipFitApplication {
 
     private static AdminInterface adminClient = new AdminService();
@@ -21,6 +26,12 @@ public class GymFlipFitApplication {
     // Use a single Scanner instance for the whole class (avoid shadowing / resource issues)
     private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * The main method that starts the application.
+     * It displays the initial menu and handles user choices for login, registration, and exiting.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         System.out.println("***** Welcome to FlipFit Application ******");
 
@@ -66,6 +77,10 @@ public class GymFlipFitApplication {
         }
     }
 
+    /**
+     * Handles the user login process by prompting for credentials and role.
+     * It validates the credentials and directs the user to the appropriate menu.
+     */
     private static void login() {
         System.out.print("Enter your username: ");
         String userName = scanner.nextLine().trim();
@@ -114,6 +129,10 @@ public class GymFlipFitApplication {
         }
     }
 
+    /**
+     * Handles the customer registration process.
+     * It prompts for customer details and calls the business service to register the new customer.
+     */
     private static void registerCustomer() {
         System.out.println("Registering as a new Customer:");
         System.out.print("Enter username: ");
@@ -135,6 +154,10 @@ public class GymFlipFitApplication {
         }
     }
 
+    /**
+     * Handles the gym owner registration process.
+     * It prompts for gym owner details and calls the business service to register the new owner.
+     */
     private static void registerGymOwner() {
         System.out.println("Registering as a new Gym Owner:");
         System.out.print("Enter username: ");

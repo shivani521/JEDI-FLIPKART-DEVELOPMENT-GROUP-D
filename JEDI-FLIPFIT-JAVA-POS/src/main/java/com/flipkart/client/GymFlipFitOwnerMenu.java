@@ -12,11 +12,21 @@ import java.util.Scanner;
 
 import static java.lang.System.in;
 
+/**
+ * The `GymFlipFitOwnerMenu` class provides the command-line interface for gym owners.
+ * It displays a menu of options for managing gyms and slots and handles user input
+ * to perform operations through the business layer.
+ */
 public class GymFlipFitOwnerMenu {
 
     private GymOwnerService gymOwnerService = new GymOwnerService();
     private Scanner sc = new Scanner(in);
 
+    /**
+     * Displays the main menu for the gym owner and processes their choices.
+     * This method provides a loop for interacting with the gym owner's functionalities,
+     * such as creating/deleting gyms and slots, and viewing bookings.
+     */
     public void ownerMainPage() {
         int choice;
         boolean isLoggedIn = false;

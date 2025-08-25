@@ -11,16 +11,32 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+/**
+ * The `GymFlipFitCustomerMenu` class provides the command-line interface for customer-specific operations.
+ * It allows customers to view gyms, check for available slots, make and cancel bookings,
+ * and view their existing bookings.
+ */
 public class GymFlipFitCustomerMenu {
 
     private CustomerService customerService;
     private Customer currentCustomer;
 
+    /**
+     * Constructs a new `GymFlipFitCustomerMenu` with a customer service and the currently logged-in customer.
+     *
+     * @param customerService The service layer for customer-related business logic.
+     * @param customer The `Customer` object representing the logged-in user.
+     */
     public GymFlipFitCustomerMenu(CustomerService customerService, Customer customer) {
         this.customerService = customerService;
         this.currentCustomer = customer;
     }
 
+    /**
+     * Displays the main customer menu and handles user input.
+     * This method presents various options to the customer and invokes the
+     * corresponding service methods based on their choice.
+     */
     public void customerMainPage() {
         Scanner scanner = new Scanner(System.in);
         int choice;

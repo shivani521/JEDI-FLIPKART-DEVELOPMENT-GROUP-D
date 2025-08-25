@@ -8,18 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Booking DAO: create/cancel and list bookings.
- * Expects a "Booking" table with columns:
- * bookingId (PK, auto-inc), customerId, bookingStatus, paymentId, createdAt, gymId, slotId, bookingDate, ...
- *
- * Important: the SQL explicitly lists target columns (including bookingStatus) so table column order doesn't matter.
+ * The `FlipFitBookingDaoImpl` class provides the data access layer for booking-related operations.
+ * It handles creating, retrieving, and canceling bookings by interacting with the database.
+ * This class ensures transactional integrity for critical operations like booking and cancellation.
  */
 public class FlipFitBookingDaoImpl {
 
     private FlipFitSlotDaoImpl slotDao = new FlipFitSlotDaoImpl();
 
     /**
-     * Get bookings for a customer.
+     * Retrieves a list of all bookings for a given customer ID.
+     *
+     * @param customerId The unique ID of the customer.
+     * @return A list of `Booking` objects associated with the customer.
+     * @throws SQLException if a database access error occurs.
      */
     public List<Booking> getBookingsByCustomer(int customerId) throws SQLException {
         List<Booking> bookings = new ArrayList<>();
@@ -45,8 +47,16 @@ public class FlipFitBookingDaoImpl {
     }
 
     /**
-     * Create booking with transaction: lock slot, decrement seats, insert booking.
-     * Returns generated bookingId (>0) on success, -1 on error / no seats.
+     * Creates a new booking in a transactional manner. It first locks the slot,
+     * decrements the number of available seats, and then inserts the new booking record.
+     *
+     * @param customerId The ID of the customer making the booking.
+     * @param gymId The ID of the gym.
+     * @param slotId The ID of the slot to be booked.
+     * @param slotDate The date of the slot.
+     * @param slotStartTime The start time of the slot.
+     * @return The generated booking ID on success; returns -1 if there are no seats available or an error occurs.
+     * @throws SQLException if a database access error occurs.
      */
     public int createBooking(int customerId, int gymId, int slotId, Date slotDate, Time slotStartTime) throws SQLException {
         Connection con = null;
@@ -72,8 +82,7 @@ public class FlipFitBookingDaoImpl {
                 return -1;
             }
 
-            // insert booking.
-            // Note: explicitly list columns (bookingStatus included). createdAt is set to CURRENT_TIMESTAMP by DB.
+            // insert booking
             String insertSql = "INSERT INTO Booking (customerId, gymId, slotId, bookingDate, bookingStatus, createdAt) " +
                     "VALUES (?, ?, ?, ?, 'ACTIVE', CURRENT_TIMESTAMP)";
             try (PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
@@ -104,7 +113,13 @@ public class FlipFitBookingDaoImpl {
     }
 
     /**
-     * Cancel booking transactionally: mark booking cancelled and increment slot seats.
+     * Cancels an existing booking in a transactional manner. It first marks the booking
+     * as "CANCELLED" and then increments the number of available seats in the corresponding slot.
+     *
+     * @param bookingId The unique ID of the booking to be cancelled.
+     * @return `true` if the booking was successfully cancelled; `false` if the booking
+     * is not found or an error occurs.
+     * @throws SQLException if a database access error occurs.
      */
     public boolean cancelBooking(int bookingId) throws SQLException {
         Connection con = null;

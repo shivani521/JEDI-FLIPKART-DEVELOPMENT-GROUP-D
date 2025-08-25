@@ -16,6 +16,12 @@ import java.util.List;
 import java.sql.Date;
 import java.sql.Time;
 
+/**
+ * The `CustomerService` class implements the `CustomerInterface` to provide
+ * all business logic and operations related to a customer.
+ * This service interacts with the data access objects (DAOs) to perform
+ * actions like viewing gyms, booking slots, and managing customer accounts.
+ */
 public class CustomerService implements CustomerInterface {
 
     private FlipFitCustomerDaoImpl customerDao = new FlipFitCustomerDaoImpl();
@@ -27,6 +33,12 @@ public class CustomerService implements CustomerInterface {
         // DB-backed service
     }
 
+    /**
+     * Retrieves a list of all gym centers available in a specific city.
+     *
+     * @param city The city for which to view gym centers.
+     * @return A list of `FlipFitGym` objects located in the specified city.
+     */
     @Override
     public List<FlipFitGym> viewAllGymCenters(String city) {
         try {
@@ -38,6 +50,13 @@ public class CustomerService implements CustomerInterface {
         }
     }
 
+    /**
+     * Retrieves a list of all free slots for a specific gym on a given date.
+     *
+     * @param gymId The unique ID of the gym.
+     * @param date The date for which to check free slots.
+     * @return A list of available `Slot` objects.
+     */
     @Override
     public List<Slot> viewAllFreeSlots(String gymId, LocalDate date) {
         try {
@@ -52,6 +71,12 @@ public class CustomerService implements CustomerInterface {
         }
     }
 
+    /**
+     * Retrieves a list of all bookings made by a specific user.
+     *
+     * @param userId The unique ID of the user.
+     * @return A list of `Booking` objects for the specified user.
+     */
     @Override
     public List<Booking> viewAllBookings(String userId) {
         try {
@@ -66,6 +91,16 @@ public class CustomerService implements CustomerInterface {
         }
     }
 
+    /**
+     * Books a specific slot for a user at a gym.
+     *
+     * @param userId The unique ID of the user making the booking.
+     * @param gymId The unique ID of the gym.
+     * @param slotId The unique ID of the slot to be booked.
+     * @param date The date of the booking.
+     * @param time The time of the booking.
+     * @return `true` if the slot was booked successfully, `false` otherwise.
+     */
     @Override
     public boolean bookSlot(int userId, String gymId, String slotId, LocalDate date, LocalTime time) {
         try {
@@ -90,6 +125,12 @@ public class CustomerService implements CustomerInterface {
         }
     }
 
+    /**
+     * Cancels an existing booking.
+     *
+     * @param bookingId The unique ID of the booking to be cancelled.
+     * @return `true` if the booking was cancelled successfully, `false` otherwise.
+     */
     @Override
     public boolean cancelSlot(String bookingId) {
         try {
@@ -107,6 +148,13 @@ public class CustomerService implements CustomerInterface {
         }
     }
 
+    /**
+     * Checks if the provided credentials belong to a valid customer.
+     *
+     * @param userName The username to validate.
+     * @param password The password to validate.
+     * @return `true` if the credentials are valid, `false` otherwise.
+     */
     @Override
     public boolean checkValidCustomer(String userName, String password) {
         try {
@@ -118,6 +166,16 @@ public class CustomerService implements CustomerInterface {
         }
     }
 
+    /**
+     * Registers a new customer with the system.
+     *
+     * @param username The desired username.
+     * @param password The password for the new account.
+     * @param email The customer's email address.
+     * @param phoneNo The customer's phone number.
+     * @param customerCity The city where the customer is located.
+     * @return The newly created `Customer` object, or `null` if registration fails.
+     */
     @Override
     public Customer registerCustomer(String username, String password, String email, String phoneNo, String customerCity) {
         String name = username; // Or ask for real name separately
@@ -137,6 +195,14 @@ public class CustomerService implements CustomerInterface {
         }
     }
 
+    /**
+     * Changes a customer's password.
+     *
+     * @param username The username of the customer.
+     * @param oldPassword The current password.
+     * @param newPassword The new password to set.
+     * @return `true` if the password was changed successfully, `false` otherwise.
+     */
     @Override
     public boolean changePassword(String username, String oldPassword, String newPassword) {
         try {
@@ -147,6 +213,13 @@ public class CustomerService implements CustomerInterface {
         }
     }
 
+    /**
+     * Authenticates a customer for login.
+     *
+     * @param userName The username of the customer.
+     * @param password The password of the customer.
+     * @return The `Customer` object if login is successful, `null` otherwise.
+     */
     @Override
     public Customer login(String userName, String password) {
         try {

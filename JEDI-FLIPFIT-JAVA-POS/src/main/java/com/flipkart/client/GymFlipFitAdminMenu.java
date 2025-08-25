@@ -8,12 +8,22 @@ import java.util.Scanner;
 
 import static java.lang.System.in;
 
+/**
+ * The `GymFlipFitAdminMenu` class provides the command-line interface for the administrator.
+ * It displays a menu of administrative options and handles user input to interact
+ * with the business layer for managing gym owners, gyms, slots, and bookings.
+ */
 public class GymFlipFitAdminMenu {
 
     private AdminInterface adminService=new AdminService();
     private GymOwnerService gymOwnerService=new GymOwnerService();
 
 
+    /**
+     * Displays the main menu for the administrator and processes their choices.
+     * This method provides options to view and approve/reject gym owners and gyms,
+     * as well as to view bookings and manage user accounts.
+     */
     public void adminMainPage() {
         System.out.println("Welcome to Admin Menu Page\n");
         System.out.println("\n------------------------------\nWelcome to FlipFit Admin Client");
